@@ -14,7 +14,7 @@ public interface ReaderMapper {
      * @return
      */
     @Select("select r.readername from reader r where r.readername = #{readername} and password = #{password}")
-    String login(Reader reader);
+    public String login(Reader reader);
 
     // 注册用于判断用户师傅已经存在
     /**
@@ -24,14 +24,11 @@ public interface ReaderMapper {
      * @param readername
      * @return
      */
-    @Select(value = "select r.readername,r.readername reader reader r where r.readername=#{readername}")
-    @Results({@Result(property = "readername",column = "username"),
-              @Result(property = "password",column = "password")})
-    Reader findUserByName(@Param("readername") String readername);
+    @Select(value = "select readername, password from reader where readername=#{readername}")
+    @Results({@Result(property = "readername", column = "username"),
+              @Result(property = "password", column = "password")})
+    public Reader findReaderByName(@Param("readername") String readername);
 
-
-    @Select("selecat * from reader")
-    public Reader findReaderByName(String name);
     // 插入数据
     @Insert("insert into reader(readername, password) values (#{readername}, #{password})")
     public boolean insetReader(Reader reader);

@@ -2,11 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
-<!--    <meta name="description" content="">-->
-<!--    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">-->
-<!--    <meta name="generator" content="Hugo 0.83.1">-->
-<!--    <title>Dashboard Template · Bootstrap v5.0</title>-->
+
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -14,7 +10,7 @@
 
     <!-- Bootstrap core CSS -->
 <!--    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">-->
-    <link th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}" rel="stylesheet"> </link>
+    <link href="../assets/dist/css/bootstrap.min.css"  th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -38,28 +34,18 @@
   </head>
   <body>
     
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name 公司名，老常测试</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul>
-</header>
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow" th:replace="sidebar::dashboardhader"> </header>
 
 <div class="container-fluid">
   <div class="row">
-    <nav th:replace="sidebar::copy (onevar=main.html)"> </nav>
+    <nav th:replace="sidebar::sidebar (onevar=main.html)"> </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
+      <h4>推荐页面，推荐小说</h4>
+      <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" th:src="@{pictures/1.jpg}" alt="" width="1700" height="960">
+<!--      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
     </main>
+
   </div>
 </div>
 

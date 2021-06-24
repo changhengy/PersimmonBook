@@ -42,8 +42,10 @@ public class LoginController {
             logger.info("登录成功");
             // session 设置内容，方便登录 拦截器配置
             session.setAttribute("loginUser", reader.getReadername());
-//            view.setViewName("redirect:/main.html");
-            view.setViewName("cover");
+
+            view.setViewName("redirect:/main.html");
+//            view.setViewName("cover");
+
         } else {
             // 登录失败
             logger.info("登录失败");
@@ -62,7 +64,8 @@ public class LoginController {
         ModelAndView view = new ModelAndView();
         Result result = readerService.registReader(reader);
         if (result.isSuccess()) {
-            view.setViewName("cover");
+//            view.setViewName("cover");
+            view.setViewName("redirect:/main.html");
         } else {
             view.addObject("msg",result.getMsg());
             view.setViewName("regist");

@@ -31,7 +31,7 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
+    <link href="signin.css" th:href="@{/signin.css}" rel="stylesheet">
 </head>
 <body class="text-center">
 
@@ -40,7 +40,7 @@
 
         <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" th:src="@{/picon.png}" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">请输入用户名和密码</h1>
-<!--        <p style="color : red " th:text="${msg}"> 错误提示可通过判断去除 </p>-->
+        <p style="color : red " th:text="${msg}"> 错误提示可通过判断去除 </p>
 
         <div class="form-floating">
             <input name="readername" type="text" class="form-control" id="floatingInput" >
