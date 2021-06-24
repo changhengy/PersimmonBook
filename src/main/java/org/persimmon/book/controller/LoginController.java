@@ -5,6 +5,7 @@ package org.persimmon.book.controller;
  */
 
 import org.persimmon.book.model.Reader;
+import org.persimmon.book.model.Result;
 import org.persimmon.book.service.ReaderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,17 +37,18 @@ public class LoginController {
     public ModelAndView login(Reader reader, HttpSession session){
         ModelAndView view = new ModelAndView();
         System.out.println("reader  +++++ " + reader);
-
-        if (readerService.readerLogin(reader)) {
+        Result result = readerService.readerLogin(reader);
+        if (result.isSuccess()) {
             logger.info("登录成功");
             // session 设置内容，方便登录 拦截器配置
             session.setAttribute("loginUser", reader.getReadername());
-            view.setViewName("redirect:/main.html");
+//            view.setViewName("redirect:/main.html");
+            view.setViewName("cover");
         } else {
             // 登录失败
             logger.info("登录失败");
             view.setStatus(HttpStatus.I_AM_A_TEAPOT);
-            view.addObject("msg","I_AM_A_TEAPOT，登录失败，需要重新登录或者注册");
+            view.addObject("msg",result.getMsg());
             view.setViewName("login");
         }
 
@@ -57,13 +59,16 @@ public class LoginController {
     public ModelAndView regist(Reader reader) {
         // 注册成功应该往哪里跳转？欢迎页面吗？  welcome 一下？
         logger.info("注册读者 方法被调用， "  + reader);
-        readerService.registReader(reader);
-
         ModelAndView view = new ModelAndView();
-        view.setViewName("login");
+        Result result = readerService.registReader(reader);
+        if (result.isSuccess()) {
+            view.setViewName("cover");
+        } else {
+            view.addObject("msg",result.getMsg());
+            view.setViewName("regist");
+        }
         return view;
     }
-
 
     @GetMapping("/reader/toRegister")
     public ModelAndView toRegister(){
