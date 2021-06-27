@@ -14,8 +14,6 @@
     </ul>
 </header>
 
-
-
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="sidebar">
         <div class="position-sticky pt-3">
             <ul class="nav flex-column">
@@ -38,7 +36,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:class="${onevar=='emps'?'nav-link active':'nav-link'}" href="#" th:href="@{/emps}" method="get">
+                    <a class="nav-link" th:class="${onevar=='emps'?'nav-link active':'nav-link'}" href="#">
                         <span data-feather="users"></span>
                         都市
                     </a>
@@ -46,13 +44,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <span data-feather="bar-chart-2"></span>
-                        Reports
+                        高分作品
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+<!--                    <a class="nav-link" th:class="${onevar=='books'?'nav-link active':'nav-link'}" href="#" th:href="@{/books}" method="get">-->
+                <a class="nav-link" href="#" th:href="@{/books}" method="get">
                         <span data-feather="layers"></span>
-                        Integrations
+                        作品管理
                     </a>
                 </li>
             </ul>
@@ -67,25 +66,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <span data-feather="file-text"></span>
-                        Current month
+                        我的书架
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <span data-feather="file-text"></span>
-                        Last quarter
+                        我评互动
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <span data-feather="file-text"></span>
-                        Social engagement
+                        我的作品 ro 书单
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <span data-feather="file-text"></span>
-                        Year-end sale
+                        我的账户
                     </a>
                 </li>
             </ul>

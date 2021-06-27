@@ -38,20 +38,12 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     @Autowired
     LoginHandlerInterceptor loginHandlerInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // addPathPatterns("/**") 拦截任意多层下的任意请求，
-        // excludePathPatterns 排除我们不想被拦截的请求
-        logger.info("追加  loginHandlerInterceptor   拦截器");
-        registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**").excludePathPatterns("/", "/login.html", "/regist.html", "reader/toRegister");
-    }
-
-    //    @Override
+//    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        // addPathPatterns("/**") 拦截任意多层下的任意请求，
 //        // excludePathPatterns 排除我们不想被拦截的请求
 //        logger.info("追加  loginHandlerInterceptor   拦截器");
-//        registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**").excludePathPatterns("/", "login.html", "/user/login", "/ttt" ,"/webjars/**");
+//        registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**").excludePathPatterns("/", "/login.html", "/regist.html", "reader/toRegister");
 //    }
 
     @ConfigurationProperties(prefix = "spring.datasource")
