@@ -43,7 +43,7 @@ public class BookController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("addBook");
 
-//        model.addAttribute("deps", bookService.getAllBookTypes());
+        model.addAttribute("booktypes", bookService.getAllBookTypes());
         return modelAndView;
     }
     //| 添加图书                           |   book    |  POST  |
@@ -52,7 +52,7 @@ public class BookController {
         logger.info("图书添加页面的表单提交 ");
         logger.info("book  : " + book );
 
-//        bookService.save(book);
+        bookService.save(book);
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("redirect:/books");
@@ -62,15 +62,15 @@ public class BookController {
     //| 来到修改页面(查出图书进行信息回显) | book/{id} |  GET   |
     //  修改
     @GetMapping("/update/{id}")
-    public ModelAndView updataBookPage(@PathVariable("id")Integer id,
+    public ModelAndView updataBookPage(@PathVariable("id")Integer bookID,
                                   Model model){
 
-//        Book book = bookService.get(id);
-//        model.addAttribute("book",book);
-//
-//        //部门选择的修改
-//        Collection<String> booktypes = bookService.getAllBookTypes();
-//        model.addAttribute("booktypes", booktypes);
+        Book book = bookService.getBookByID(bookID);
+        model.addAttribute("book",book);
+
+        //部门选择的修改
+        Collection<String> booktypes = bookService.getAllBookTypes();
+        model.addAttribute("booktypes", booktypes);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("addBook");
@@ -84,15 +84,15 @@ public class BookController {
         logger.info("book  : " + book );
 
         //修改的数据
-//        bookService.save(book);
+        bookService.save(book);
 
         return "redirect:/books";
     }
     //| 删除图书                           | book/{id} | DELETE |
     //  删除请求
     @DeleteMapping("/delete/{id}")
-    public  String  delete(@PathVariable("id") Integer id){
-//        bookService.delete(id);
+    public  String  delete(@PathVariable("id") Integer bookID){
+        bookService.delete(bookID);
 
         return "redirect:/books";
     }
