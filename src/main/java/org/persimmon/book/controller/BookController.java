@@ -5,11 +5,14 @@ import org.persimmon.book.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
 @Controller
@@ -48,9 +51,14 @@ public class BookController {
     }
     //| 添加图书                           |   book    |  POST  |
     @PostMapping("/book")
-    public ModelAndView addBook(Book book){
+    public ModelAndView addBook(Book book , HttpServletRequest request){
         logger.info("图书添加页面的表单提交 ");
         logger.info("book  : " + book );
+
+        HttpSession session = request.getSession();
+        String loginUser = (String) session.getAttribute("loginUser");
+
+        book.setBookAuthorName(loginUser);
 
         bookService.save(book);
         ModelAndView modelAndView = new ModelAndView();
@@ -78,7 +86,7 @@ public class BookController {
     }
     //| 修改图书信息                       |   book    |  PUT   |
     //  图书修改
-    @PutMapping("/update1")
+    @PutMapping("/book")
     public String  updataToEmp(Book book){
         logger.info("图书修改页面的表单提交 ");
         logger.info("book  : " + book );

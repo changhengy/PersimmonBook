@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <!--    <meta name="description" content="">-->
+  <!--    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">-->
+  <!--    <meta name="generator" content="Hugo 0.83.1">-->
+  <!--    <title>Dashboard Tbooklate · Bootstrap v5.0</title>-->
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+
+
+  <!-- Bootstrap core CSS -->
+  <!--    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">-->
+  <link th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}" rel="stylesheet"> </link>
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this tbooklate -->
+  <link href="dashboard.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow" th:replace="sidebar::dashboardhader"> </header>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <nav th:replace="sidebar::sidebar "> </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <h2> 图书添加页面 </h2>
+      <!--添加员工的表单 -->
+      <form th:action="@{/book}" method="post">
+        <!--发送put请求修改员工数据-->
+        <!--
+        1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+        2、页面创建一个post表单
+        3、创建一个input项，name="_method";值就是我们指定的请求方式
+        -->
+        <input type="hidden" name="_method" value="put" th:if="${book!=null}"/>
+        <input type="hidden" name="bookID" th:if="${book!=null}" th:value="${book.bookID}">
+        <div class="form-group">
+          <label>书名</label>
+          <input name="bookName" type="text" class="form-control" placeholder="斗罗大陆" th:value="${book!=null}?${book.bookName}">
+        </div>
+        <div class="form-group">
+          <label>描述</label>
+          <input name="text" type="bookDescription" class="form-control" placeholder="这是一本xxxx的小说" th:value="${book!=null}?${book.bookDescription}">
+        </div>
+<!--        <div class="form-group">-->
+<!--          <label>Gender</label><br/>-->
+<!--          <div class="form-check form-check-inline">-->
+<!--            <input class="form-check-input" type="radio" name="gender" value="1" th:checked="${book!=null}?${book.gender==1}">-->
+<!--            <label class="form-check-label">男</label>-->
+<!--          </div>-->
+<!--          <div class="form-check form-check-inline">-->
+<!--            <input class="form-check-input" type="radio" name="gender" value="0" th:checked="${book!=null}?${book.gender==0}">-->
+<!--            <label class="form-check-label">女</label>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="form-group">
+          <label>图书类型</label>
+
+          <select class="form-control" name="book.bookType">
+<!--            <option th:each="booktype:${booktypes}" th:text="${book.booktype}"-->
+<!--                    th:value="${book.booktype}"> 1 </option>-->
+          </select>
+        </div>
+<!--        <div class="form-group">-->
+<!--          <label>Birth</label>-->
+<!--          <input name="birth" type="text" class="form-control" placeholder="zhangsan" th:value="${book!=null}?${#dates.format(book.birth, 'yyyy-MM-dd HH:mm')}">-->
+<!--        </div>-->
+        <button type="submit" class="btn btn-primary" th:text="${book!=null}?'修改':'添加'">添加</button>
+      </form>
+    </main>
+
+  </div>
+</div>
+
+
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+</body>
+</html>

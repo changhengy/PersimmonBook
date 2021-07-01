@@ -33,6 +33,24 @@ public class Book {
     private Long bookCoverID;
     private String bookCoverName;
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookID=" + bookID +
+                ", bookName='" + bookName + '\'' +
+                ", bookAuthorID=" + bookAuthorID +
+                ", bookAuthorName='" + bookAuthorName + '\'' +
+                ", bookDescription='" + bookDescription + '\'' +
+                ", bookCreated=" + bookCreated +
+                ", bookUpdated=" + bookUpdated +
+                ", bookType='" + bookType + '\'' +
+                ", bookTags=" + bookTags +
+                ", chapterIDList=" + chapterIDList +
+                ", bookCoverID=" + bookCoverID +
+                ", bookCoverName='" + bookCoverName + '\'' +
+                '}';
+    }
+
     public Long getBookID() {
         return bookID;
     }
