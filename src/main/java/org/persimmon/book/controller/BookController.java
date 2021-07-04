@@ -70,7 +70,7 @@ public class BookController {
     //| 来到修改页面(查出图书进行信息回显) | book/{id} |  GET   |
     //  修改
     @GetMapping("/update/{id}")
-    public ModelAndView updataBookPage(@PathVariable("id")Integer bookID,
+    public ModelAndView updataBookPage(@PathVariable("id")Long bookID,
                                   Model model){
 
         Book book = bookService.getBookByID(bookID);
@@ -87,22 +87,34 @@ public class BookController {
     //| 修改图书信息                       |   book    |  PUT   |
     //  图书修改
     @PutMapping("/book")
-    public String  updataToEmp(Book book){
+    public String updataToEmp(Book book){
         logger.info("图书修改页面的表单提交 ");
         logger.info("book  : " + book );
 
         //修改的数据
-        bookService.save(book);
-
+        book.setBookCreated(bookService.getBookByID(book.getBookID()).getBookCreated());
+        bookService.updateBook(book);
+        bookService.delete(book.getBookID());
         return "redirect:/books";
     }
     //| 删除图书                           | book/{id} | DELETE |
     //  删除请求
     @DeleteMapping("/delete/{id}")
-    public  String  delete(@PathVariable("id") Integer bookID){
+    public String delete(@PathVariable("id") Long bookID){
         bookService.delete(bookID);
 
         return "redirect:/books";
     }
 
+    // 图书章节展示，预览
+    @GetMapping("/bookPreview/{id}")
+    public ModelAndView bookPreview(@PathVariable("id")Long bookID,
+                                    Model model) {
+        Book book = bookService.getBookByID(bookID);
+        model.addAttribute("book",book);
+
+        ModelAndView view = new ModelAndView();
+        view.setViewName("chapterList");
+        return view;
+    }
 }

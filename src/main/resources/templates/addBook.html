@@ -61,10 +61,10 @@
           <label>书名</label>
           <input name="bookName" type="text" class="form-control" placeholder="斗罗大陆" th:value="${book!=null}?${book.bookName}">
         </div>
-        <div class="form-group">
-          <label>描述</label>
-          <input name="text" type="bookDescription" class="form-control" placeholder="这是一本xxxx的小说" th:value="${book!=null}?${book.bookDescription}">
-        </div>
+<!--        <div class="form-group">-->
+<!--          <label>描述</label>-->
+<!--          <input name="bookDescription" type="text" class="form-control" placeholder="在这里添加小说的描述..........." th:value="${book!=null}?${book.bookDescription}">-->
+<!--        </div>-->
 <!--        <div class="form-group">-->
 <!--          <label>Gender</label><br/>-->
 <!--          <div class="form-check form-check-inline">-->
@@ -79,11 +79,12 @@
         <div class="form-group">
           <label>图书类型</label>
 
-          <select class="form-control" name="book.bookType">
-<!--            <option th:each="booktype:${booktypes}" th:text="${book.booktype}"-->
-<!--                    th:value="${book.booktype}"> 1 </option>-->
+          <select class="form-control" name="bookType" type="text">
+            <option th:each="booktype:${booktypes}" th:text="${booktype}" th:value="${book!=null}?${book.bookType}"> ----请选择----  </option>
           </select>
+
         </div>
+
 <!--        <div class="form-group">-->
 <!--          <label>Birth</label>-->
 <!--          <input name="birth" type="text" class="form-control" placeholder="zhangsan" th:value="${book!=null}?${#dates.format(book.birth, 'yyyy-MM-dd HH:mm')}">-->

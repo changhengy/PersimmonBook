@@ -9,6 +9,7 @@ import java.util.List;
 //        bookCoverID TEXT,
 //        bookCoverName TEXT,
 //        bookAuthorID TEXT,
+//        bookAuthorName TEXT,
 //        bookDescription TEXT,
 //        bookCreated  timestamp(6),
 //        bookUpdated timestamp(6),
@@ -16,7 +17,6 @@ import java.util.List;
 //        bookTags text[],
 //        chapterIDList integer[]
 //        );
-
 
 public class Book {
     private Long bookID;

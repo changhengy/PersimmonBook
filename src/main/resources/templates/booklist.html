@@ -43,7 +43,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <nav th:replace="sidebar::sidebar "> </nav>
+        <nav th:replace="sidebar::sidebar (onevar=books)"> </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <h3><a class="btn btn-sm btn-success " th:href="@{book}" method="get">图书添加</a></h3>
@@ -55,25 +55,33 @@
                         <th>作品名</th>
                         <th>作者ID</th>
                         <th>作者名</th>
-                        <th>图书简介</th>
-<!--                        <th>图书创建时间</th>-->
-<!--                        <th>最后更新时间</th>-->
+<!--                        <th>图书简介</th>-->
+
                         <th>图书类别</th>
-                        <th>图书标签</th>
+<!--                        <th>图书标签</th>-->
+                        <th>图书创建时间</th>
+                        <th>最后更新时间</th>
                         <th>操作</th>
+
+
                     </tr>
                     </thead>
 
                     <tbody>
                     <!-- 遍历emps，取出的数值叫emp-->
                     <tr th:each="book:${books}">
-                        <td th:text="${book.bookID}"></td>
-                        <td th:text="${book.bookName}"></td>
+                        <td th:text="${book.bookID}" ></td>
+
+                        <td >
+                            <a class="nav-link" href="#" th:text="${book.bookName}" th:href="@{/bookPreview/} + ${book.bookID} " method="get">开始阅读</a>
+                        </td>
                         <td th:text="${book.bookAuthorID}"></td>
                         <td th:text="${book.bookAuthorName}"></td>
-                        <td th:text="${book.bookDescription}"></td>
+<!--                        <td th:text="${book.bookDescription}"></td>-->
                         <td th:text="${book.bookType}"></td>
 <!--                        <td th:text="${book.bookCoverID}"></td>-->
+                        <td th:text="${book.bookCreated}"></td>
+                        <td th:text="${book.bookUpdated}"></td>
                         <td>
                             <a class="btn btn-sm btn-primary" th:href="@{/update/} + ${book.bookID} ">修改</a>
                             <form th:action="@{/delete/}+${book.bookID}" method="post">

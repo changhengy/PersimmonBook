@@ -33,20 +33,30 @@ public class BookService {
     }
     
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
+        logger.info("图书删除动作");
+        bookMapper.deleteBook(id);
     }
 
     public void save(Book book) {
         logger.info("图书保存动作");
-        book.setBookCreated(new Timestamp(1000));
+        book.setBookCreated(new Timestamp(System.currentTimeMillis()));
         logger.info("book : "  + book.toString());
+        bookMapper.saveBook(book);
+    }
+
+    public void updateBook(Book book) {
+        logger.info("图书更新动作");
+        book.setBookUpdated(new Timestamp(System.currentTimeMillis()));
+        logger.info("book : "  + book.toString());
+        bookMapper.saveBook(book);
     }
 
     public Collection<String> getAllBookTypes() {
         return bookTypes;
     }
 
-    public Book getBookByID(Integer bookID) {
+    public Book getBookByID(Long bookID) {
         return bookMapper.getBookByID(bookID);
     }
 }
