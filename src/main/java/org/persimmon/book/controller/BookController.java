@@ -92,9 +92,7 @@ public class BookController {
         logger.info("book  : " + book );
 
         //修改的数据
-        book.setBookCreated(bookService.getBookByID(book.getBookID()).getBookCreated());
         bookService.updateBook(book);
-        bookService.delete(book.getBookID());
         return "redirect:/books";
     }
     //| 删除图书                           | book/{id} | DELETE |

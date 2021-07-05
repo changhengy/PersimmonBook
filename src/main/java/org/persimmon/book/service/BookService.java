@@ -47,9 +47,10 @@ public class BookService {
 
     public void updateBook(Book book) {
         logger.info("图书更新动作");
+        book.setBookCreated(getBookByID(book.getBookID()).getBookCreated());
         book.setBookUpdated(new Timestamp(System.currentTimeMillis()));
         logger.info("book : "  + book.toString());
-        bookMapper.saveBook(book);
+        bookMapper.updateBook(book);
     }
 
     public Collection<String> getAllBookTypes() {

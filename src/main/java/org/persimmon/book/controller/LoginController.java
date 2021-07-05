@@ -6,12 +6,14 @@ package org.persimmon.book.controller;
 
 import org.persimmon.book.model.Reader;
 import org.persimmon.book.model.Result;
+import org.persimmon.book.service.BookService;
 import org.persimmon.book.service.ReaderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +26,9 @@ public class LoginController {
     @Autowired
     ReaderService readerService;
 
+    @Autowired
+    BookService bookService;
+
     Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @GetMapping("/")
@@ -34,7 +39,7 @@ public class LoginController {
     }
 
     @PostMapping("/reader/login")
-    public ModelAndView login(Reader reader, HttpSession session){
+    public ModelAndView login(Reader reader, HttpSession session, Model model){
         ModelAndView view = new ModelAndView();
         System.out.println("reader  +++++ " + reader);
         Result result = readerService.readerLogin(reader);
@@ -42,7 +47,8 @@ public class LoginController {
             logger.info("登录成功");
             // session 设置内容，方便登录 拦截器配置
             session.setAttribute("loginUser", reader.getReadername());
-
+            model.addAttribute("books", bookService.getAllBook());
+            model.addAttribute("bookname", "测试bookname 能不能取得");
             view.setViewName("redirect:/main.html");
 //            view.setViewName("cover");
 

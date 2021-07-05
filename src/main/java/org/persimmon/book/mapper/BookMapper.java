@@ -1,9 +1,6 @@
 package org.persimmon.book.mapper;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.persimmon.book.model.Book;
 
 import java.util.Collection;
@@ -21,6 +18,10 @@ public interface BookMapper {
             "values(#{bookName}, #{bookDescription}, #{bookAuthorID},#{bookAuthorName},#{bookCreated},#{bookUpdated},#{bookType})")
     public void saveBook(Book book);
 
+
+    @Update("update book set bookName=#{bookName},bookDescription=#{bookDescription},bookAuthorID=#{bookAuthorID},bookAuthorName=#{bookAuthorName}," +
+            "bookCreated=#{bookCreated},bookUpdated=#{bookUpdated},bookType=#{bookType} where bookID=#{bookID}")
+    public void updateBook(Book book);
 
     @Delete("delete from book where bookID=#{bookID}")
     public void deleteBook(Long bookID);

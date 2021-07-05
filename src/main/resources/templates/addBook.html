@@ -79,11 +79,14 @@
         <div class="form-group">
           <label>图书类型</label>
 
-          <select class="form-control" name="bookType" type="text">
-            <option th:each="booktype:${booktypes}" th:text="${booktype}" th:value="${book!=null}?${book.bookType}"> ----请选择----  </option>
+<!--          <select class="form-control" name="bookType" type="text">-->
+<!--            <option th:each="booktype:${booktypes}" th:text="${booktype}" th:value="${book!=null}?${book.bookType}"> &#45;&#45;&#45;&#45;请选择&#45;&#45;&#45;&#45;  </option>-->
+<!--          </select>-->
+          <select name="bookType" type="text" class="form-control" >
+            <option th:each="booktype:${booktypes}" th:text="${booktype}" > ----请选择----  </option>
           </select>
-
         </div>
+
 
 <!--        <div class="form-group">-->
 <!--          <label>Birth</label>-->
