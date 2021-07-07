@@ -5,14 +5,19 @@ import org.persimmon.book.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 
 @Controller
@@ -57,7 +62,6 @@ public class BookController {
 
         HttpSession session = request.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
-
         book.setBookAuthorName(loginUser);
 
         bookService.save(book);
@@ -86,11 +90,19 @@ public class BookController {
     }
     //| 修改图书信息                       |   book    |  PUT   |
     //  图书修改
+    @Value("${file.upload.path}")
+    private String path;
+
     @PutMapping("/book")
-    public String updataToEmp(Book book){
+    public String updataToEmp(Book book , @RequestPart MultipartFile file) throws IOException {
         logger.info("图书修改页面的表单提交 ");
         logger.info("book  : " + book );
 
+        String fileName = file.getOriginalFilename();
+        String filePath = path + fileName;
+
+        File dest = new File(filePath);
+        Files.copy(file.getInputStream(), dest.toPath());
         //修改的数据
         bookService.updateBook(book);
         return "redirect:/books";
