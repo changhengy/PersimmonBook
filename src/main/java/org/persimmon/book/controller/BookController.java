@@ -1,6 +1,7 @@
 package org.persimmon.book.controller;
 
 import org.persimmon.book.model.Book;
+import org.persimmon.book.model.BookCover;
 import org.persimmon.book.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collection;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 public class BookController {
@@ -54,11 +57,29 @@ public class BookController {
         model.addAttribute("booktypes", bookService.getAllBookTypes());
         return modelAndView;
     }
+    @Value("${file.upload.path}")
+    private String path;
+
     //| 添加图书                           |   book    |  POST  |
     @PostMapping("/book")
-    public ModelAndView addBook(Book book , HttpServletRequest request){
+    public ModelAndView addBook(Book book , HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
         logger.info("图书添加页面的表单提交 ");
         logger.info("book  : " + book );
+
+        String fileName = file.getOriginalFilename();
+        String filePath = "C:\\Users\\Pc-Lc\\Desktop\\LearnSpring\\PersimmonBook\\src\\main\\resources\\static\\BookCover\\";
+
+        // 设置 Book 封面  通过ID 联系
+        BookCover cover = new BookCover(new Random().nextInt());
+        book.setBookCoverID(cover.getCoverUUid());
+        book.setBookCoverName(cover.getCoverUUid() + fileName);
+
+        filePath = filePath + cover.getCoverUUid() + fileName;
+
+        logger.info("最终计算的图片存放路径是： "  + filePath);
+        File dest = new File(filePath);
+        Files.copy(file.getInputStream(), dest.toPath());
+        file.transferTo(dest);
 
         HttpSession session = request.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
@@ -90,17 +111,19 @@ public class BookController {
     }
     //| 修改图书信息                       |   book    |  PUT   |
     //  图书修改
-    @Value("${file.upload.path}")
-    private String path;
 
     @PutMapping("/book")
-    public String updataToEmp(Book book , @RequestPart MultipartFile file) throws IOException {
+    public String updataToEmp(Book book , @RequestParam("file") MultipartFile file) throws IOException {
         logger.info("图书修改页面的表单提交 ");
         logger.info("book  : " + book );
+        if (null == file) {
+            logger.info("file  :  空文件 ，上传失败"  );
+        }
 
         String fileName = file.getOriginalFilename();
         String filePath = path + fileName;
 
+        logger.info("最终计算的图片存放路径是： "  + filePath);
         File dest = new File(filePath);
         Files.copy(file.getInputStream(), dest.toPath());
         //修改的数据
@@ -122,7 +145,6 @@ public class BookController {
                                     Model model) {
         Book book = bookService.getBookByID(bookID);
         model.addAttribute("book",book);
-        model.addAttribute("bookname", "测试书名传递方法");
         model.addAttribute("books", bookService.getAllBook());
 
         ModelAndView view = new ModelAndView();

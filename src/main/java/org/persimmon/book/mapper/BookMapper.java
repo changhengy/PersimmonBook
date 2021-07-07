@@ -14,8 +14,8 @@ public interface BookMapper {
     @Select("select * from book")
     public Collection<Book> getAllBook();
 
-    @Insert("insert into book(bookName,bookDescription,bookAuthorID,bookAuthorName,bookCreated,bookUpdated,bookType)" +
-            "values(#{bookName}, #{bookDescription}, #{bookAuthorID},#{bookAuthorName},#{bookCreated},#{bookUpdated},#{bookType})")
+    @Insert("insert into book(bookName,bookDescription,bookAuthorID,bookAuthorName,bookCreated,bookUpdated,bookType,bookCoverID,bookCoverName)" +
+            "values(#{bookName}, #{bookDescription}, #{bookAuthorID},#{bookAuthorName},#{bookCreated},#{bookUpdated},#{bookType}, #{bookCoverID},#{bookCoverName})")
     public void saveBook(Book book);
 
 

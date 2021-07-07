@@ -6,7 +6,7 @@ import java.util.List;
 //CREATE TABLE book(
 //        bookID serial PRIMARY KEY,
 //        bookName TEXT,
-//        bookCoverID TEXT,
+//        bookCoverID integer,
 //        bookCoverName TEXT,
 //        bookAuthorID TEXT,
 //        bookAuthorName TEXT,
@@ -30,7 +30,7 @@ public class Book {
     private List<String> bookTags;  // 图书标签
     private List<Long> chapterIDList;
 
-    private Long bookCoverID;
+    private Integer bookCoverID;
     private String bookCoverName;
 
     @Override
@@ -67,11 +67,11 @@ public class Book {
         this.bookName = bookName;
     }
 
-    public Long getBookCoverID() {
+    public Integer getBookCoverID() {
         return bookCoverID;
     }
 
-    public void setBookCoverID(Long bookCoverID) {
+    public void setBookCoverID(Integer bookCoverID) {
         this.bookCoverID = bookCoverID;
     }
 
