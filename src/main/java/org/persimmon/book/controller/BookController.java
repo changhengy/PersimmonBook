@@ -110,8 +110,11 @@ public class BookController {
                                     Model model) {
         Book book = bookService.getBookByID(bookID);
         model.addAttribute("book",book);
+        model.addAttribute("bookname", "测试书名传递方法");
+        model.addAttribute("books", bookService.getAllBook());
 
         ModelAndView view = new ModelAndView();
+
         view.setViewName("chapterList");
         return view;
     }

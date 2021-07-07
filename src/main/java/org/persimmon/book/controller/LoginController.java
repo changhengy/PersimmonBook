@@ -16,8 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,28 +42,37 @@ public class LoginController {
     }
 
     @PostMapping("/reader/login")
-    public ModelAndView login(Reader reader, HttpSession session, Model model){
-        ModelAndView view = new ModelAndView();
+    public RedirectView login(Reader reader, HttpSession session, RedirectAttributes model){
+        RedirectView view = new RedirectView();
         System.out.println("reader  +++++ " + reader);
         Result result = readerService.readerLogin(reader);
         if (result.isSuccess()) {
             logger.info("登录成功");
             // session 设置内容，方便登录 拦截器配置
             session.setAttribute("loginUser", reader.getReadername());
-            model.addAttribute("books", bookService.getAllBook());
-            model.addAttribute("bookname", "测试bookname 能不能取得");
-            view.setViewName("redirect:/main.html");
-//            view.setViewName("cover");
-
+            model.addFlashAttribute("bookname", "测试bookname 能不能取得");
+            model.addFlashAttribute("books", bookService.getAllBook());
+            view.setUrl("/main.html");
         } else {
             // 登录失败
             logger.info("登录失败");
-            view.setStatus(HttpStatus.I_AM_A_TEAPOT);
-            view.addObject("msg",result.getMsg());
-            view.setViewName("login");
+//            view.setStatus(HttpStatus.I_AM_A_TEAPOT);
+            model.addFlashAttribute("msg", result.getMsg());
+//            view.addObject("msg",result.getMsg());
+
+            view.setUrl("/index.html");
         }
 
         return view;
+    }
+
+    @GetMapping("/main.html")
+    public ModelAndView toHome(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        model.addAttribute("bookname", "测试bookname 能不能取得");
+        model.addAttribute("books", bookService.getAllBook());
+        modelAndView.setViewName("dashboard");
+        return modelAndView;
     }
 
     @PostMapping("/reader/regist")
