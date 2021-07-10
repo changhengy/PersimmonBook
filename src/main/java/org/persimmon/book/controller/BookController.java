@@ -67,10 +67,10 @@ public class BookController {
         logger.info("book  : " + book );
 
         String fileName = file.getOriginalFilename();
-        String filePath = "C:\\Users\\Pc-Lc\\Desktop\\LearnSpring\\PersimmonBook\\src\\main\\resources\\static\\BookCover\\";
+        String filePath = "C:\\Users\\Pc-Lc\\Desktop\\LearnSpring\\PersimmonBook\\src\\main\\resources\\static\\bookcover\\";
 
         // 设置 Book 封面  通过ID 联系
-        BookCover cover = new BookCover(new Random().nextInt());
+        BookCover cover = new BookCover(new Random().nextInt(100000));
         book.setBookCoverID(cover.getCoverUUid());
         book.setBookCoverName(cover.getCoverUUid() + fileName);
 
@@ -139,17 +139,4 @@ public class BookController {
         return "redirect:/books";
     }
 
-    // 图书章节展示，预览
-    @GetMapping("/bookPreview/{id}")
-    public ModelAndView bookPreview(@PathVariable("id")Long bookID,
-                                    Model model) {
-        Book book = bookService.getBookByID(bookID);
-        model.addAttribute("book",book);
-        model.addAttribute("books", bookService.getAllBook());
-
-        ModelAndView view = new ModelAndView();
-
-        view.setViewName("chapterList");
-        return view;
-    }
 }

@@ -33,6 +33,10 @@ public class Book {
     private Integer bookCoverID;
     private String bookCoverName;
 
+    public boolean addChapter(Long chapterID) {
+        return chapterIDList.add(chapterID);
+    }
+
     @Override
     public String toString() {
         return "Book{" +
