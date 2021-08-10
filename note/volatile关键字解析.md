@@ -1,4 +1,4 @@
-##### volatile 关键字解析
+#### volatile 关键字解析
 
 * 是什么？(定义和特性？)
 
@@ -50,7 +50,7 @@ volatile的特殊规则就是：
 
 ----
 
-### volatile 可见性验证和不保证原子性验证
+#### volatile 可见性验证和不保证原子性验证
 
 ```java
 import java.util.concurrent.TimeUnit;
@@ -70,7 +70,6 @@ class Mydata {
         number.addAndGet(1);
     }
 }
-
 /**
  * 1.验证Volatile的可见性
  *   1.1假如 int number = 0;number变量之前根本没有添加volatile关键字修饰，没有可见性
@@ -129,9 +128,7 @@ public class Test {
 }
 ```
 
-
-
-### volatile 底层实现需要阅读汇编代码，生成汇编代码的方式如下：
+#### volatile 底层实现需要阅读汇编代码，生成汇编代码的方式如下：
 
 https://juejin.cn/post/6844903656806940686
 
