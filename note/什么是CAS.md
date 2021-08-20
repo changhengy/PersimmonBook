@@ -96,6 +96,33 @@ PS：从思想上来说，CAS属于是乐观锁，乐观地认为程序中的并
   - 以JAVA Auomic 类 为列，底层实现中是do while 循环，如果并发量比较高的情况下，如果许多线程反复尝试更新某一个变量，却又一直更新不成功，循环往复，会给CPU带来很大的压力。
 * 不能保证代码块的原子性，只能保证变量原子性
 
+##### 4.1.1 ABA问题如何解决？
+
+JDK的atomic包里提供了一个类AtomicStampedReference来解决ABA问题。**如果当前引用 == 预期引用，并且当前标志等于预期标志，则以原子方式将该引用和该标志的值设置为给定的更新值。**源码如下：
+
+```java
+/**
+ *expectedReference - 该引用的预期值
+ *newReference - 该引用的新值
+ *expectedStamp - 该标志的预期值
+ *newStamp - 该标志的新值
+ */
+public boolean compareAndSet(V   expectedReference,
+                                 V   newReference,
+                                 int expectedStamp,
+                                 int newStamp) {
+        Pair<V> current = pair;
+        return
+            expectedReference == current.reference &&
+            expectedStamp == current.stamp &&
+            ((newReference == current.reference &&
+              newStamp == current.stamp) ||
+             casPair(current, Pair.of(newReference, newStamp)));
+    }
+```
+
+
+
 ---
 
 ##### 4.2 CAS 和 Synchronize的区别是什么？适合用于什么样的场景？有什么样的优缺点？
