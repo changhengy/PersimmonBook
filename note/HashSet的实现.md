@@ -1,5 +1,7 @@
 [HashSet实现原理](https://www.jianshu.com/p/1ed5fa8e357b)
 
+[HashMap原理详解，看不懂算我输（附面试题）](https://zhuanlan.zhihu.com/p/127147909)
+
 ## HashSet简述
 
 > HashSet中不允许有重复元素，这是因为**HashSet是基于HashMap实现的**，HashSet中的元素都存放在HashMap的key上面，而value中的值都是统一的一个**private static final Object PRESENT = new Object();**。HashSet跟HashMap一样，都是一个存放链表的数组。
