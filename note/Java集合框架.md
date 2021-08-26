@@ -363,6 +363,8 @@ Properties 继承自Hashtable，并新增了load() 和 store() ，可以直接�
 > `Comparator`比较器、`Comparable `排序接口
 >
 > `Comparator`和 `Comparable `接口都是用来比较大小的，一般在TreeMap 和 TreeSet 中使用比较多，主要用于解决排序问题。
+>
+> **[Java中Comparable与Comparator的区别](https://www.jianshu.com/p/fa1a1089d44d)**
 
 ### 6.1 Comparable 
 
@@ -429,15 +431,48 @@ class Person implements Comparable<Person>{
 
 ### 6.2、Comparator
 
+```java
+Collections.sort( StudentList , new StudentComparator()) 
+不仅要传入待排序的列表，还要传入实现了Comparator的类的对象
+```
 
-
-七、常用工具类
-
-3)、**封装算法**
+## 七、常用工具类
 
 `Collections`常用算法类、`Arrays`静态数组的排序、查找算法
 
-八、迭代器
+### 7.1、Collections类
+
+#### 7.1.1、addAll
+
+#### 7.1.2、binarySearch
+
+#### 7.1.3、sort
+
+#### 7.1.4、shuffle
+
+#### 7.1.5、reverse
+
+#### 7.1.6、synchronized系列
+
+
+
+### 7.2、Arrays类
+
+#### 7.2.1、asList
+
+#### 7.2.2、sort
+
+#### 7.2.3、binarySearch
+
+#### 7.2.4、copyOf
+
+#### 7.2.5、copyOfRange
+
+#### 7.2.6、equals和deepEquals
+
+#### 7.2.7、toString和deepToString
+
+## 八、迭代器
 
 `Iterator`通用迭代器、`ListIterator`针对`Iterator`特化的迭代器
 
