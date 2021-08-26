@@ -302,33 +302,134 @@ for (int i = 0; i < 10; i++) {
 27, 40, 43, 44, 55, 68, 77, 86, 95, 99, 
 ```
 
-五、映射表 Map
+## 五、映射表 Map
 
 > Map是一个双列集合，其中保存的是键值对，键要求保持唯一性，值可以重复
 >
 > Map接口的主要实现类有：HashMap、LinkedHashMap、TreeMap、IdentityHashMap、WeakHashMap、HashTable、Properties
 
-5.1 HashMap、
+### 5.1 HashMap
 
-继承自抽象类AbstractMap，
+继承自抽象类AbstractMap，key 不可重复，因为使用的是哈希表存储元素，所以输入的数据的顺序和输出数据的顺序基本不一致，
 
-5.2 LinkedHashMap、
+另外，HashMap最多只允许一个key 为null
 
-5.3 TreeMap、
+### 5.2 LinkedHashMap
 
-5.4 IdentityHashMap、
+HashMap 的子类，内部使用链表数据结构来记录插入的顺序，使得输入的记录顺序和输出的记录顺序是相同的。
 
-5.5 WeakHashMap、
+**LinkedHashMap与HashMap最大的不同处在于，LinkedHashMap输入的记录和输出的记录顺序是相同的**
 
-5.6 HashTable、
+### 5.3 TreeMap
 
-5.7 Properties
+能够把它保存的记录根据键排序，默认是按键值的升序排序，也可以指定排序的比较器，当用 Iterator 遍历时，得到的记录是排过序的；如需使用排序的映射，建议使用 TreeMap。TreeMap实际使用的比较少！
+
+### 5.4 IdentityHashMap
+
+继承自AbstractMap，与HashMap有些不同，在获取元素的时候，通过`==`代替`equals ()`来进行判断，**比较的是内存地址**。
+
+### 5.5 WeakHashMap
+
+### 5.6 HashTable
+
+HashTable，一个元老级的类，**Since:**JDK1.0，键值不能为空，方法都加了`synchronized`同步锁，是线程安全的，之前状态机中存状态就用的这个类，
+
+HashTable 和 HashMap 的区别，类似于ArryList 和 Vector。
+
+同时，HashMap 是 HashTable 的轻量级实现，他们都完成了Map 接口，区别在于 HashMap 允许K和V为空，而HashTable不允许K和V为空，由于非线程安全，效率上可能高于 Hashtable。
+
+如果在多线程环境中需要使用HashMap，有两个方案：
+
+> 使用 Collections 工具包下的 算法进行实现，
+
+```java
+Map<String, Object> map =Collections.synchronizedMap(new HashMap<>());
+```
+
+> 使用并发工具包中的`ConcurrentHashMap`类
+
+### 5.7 Properties
+
+Properties 继承自Hashtable，并新增了load() 和 store() ，可以直接导入或者将映射写入文件，另外，Properties  的 键值都是String 类型。
+
+盲猜Spring Boot 应该就是使用Properties 类进行的文件加载，[廖雪峰的使用方法](https://www.liaoxuefeng.com/wiki/1252599548343744/1265119084411136)
+
+如果有多个`.properties`文件，可以反复调用`load()`读取，后读取的key-value会覆盖已读取的key-value
+
+这应该就是，Spring Boot 不同路径下 properties  文件优先级的实现原理。
+
+## 六、比较器 Comparator
+
+> `Comparator`比较器、`Comparable `排序接口
+>
+> `Comparator`和 `Comparable `接口都是用来比较大小的，一般在TreeMap 和 TreeSet 中使用比较多，主要用于解决排序问题。
+
+### 6.1 Comparable 
+
+Comparable ：对每个实现 Comparable 的类实例进行整体排序。
+
+```java
+package java.lang;
+import java.util.*;
+public interface Comparable<T> {
+    public int compareTo(T o);
+}
+```
+
+>  **若一个类实现了Comparable 接口，实现 Comparable 接口的类的对象的 List 列表 ( 或数组)可以通过 Collections.sort（或 Arrays.sort）进行排序。**
+
+> **此外，实现 Comparable 接口的类的对象 可以用作 “有序映射 ( 如 TreeMap)” 中的键或 “有序集合 (TreeSet)” 中的元素，而不需要指定比较器。**
+
+**测试代码：**
+
+```java
+public class CollectionNotSafeDemo {
+    public static void main(String[] args) {
+        Person person_1 = new Person(15, "张三");
+        Person person_2 = new Person(18, "李四");
+        Person person_3 = new Person(20, "王五");
+
+        List<Person> list = new ArrayList<>();
+        list.add(person_1);
+        list.add(person_3);
+        list.add(person_2);
+        list.add(person_1);
+        list.add(person_3);
+        System.out.println(list);
+        Collections.sort(list);
+        System.out.println(list);
+    }
+}
+
+class Person implements Comparable<Person>{
+    private int age;
+    private String name;
+
+    public Person(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return this.age - o.age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +"age=" + age +", name='" + name + '\'' +'}';
+    }
+}
+```
+
+**输出结果：**
+
+[Person{age=15, name='张三'}, Person{age=20, name='王五'}, Person{age=18, name='李四'}, Person{age=15, name='张三'}, Person{age=20, name='王五'}]
+[Person{age=15, name='张三'}, Person{age=15, name='张三'}, Person{age=18, name='李四'}, Person{age=20, name='王五'}, Person{age=20, name='王五'}]
+
+### 6.2、Comparator
 
 
-
-### 六、比较器 Comparator
-
-`Comparator`比较器、`Comparable `排序接口
 
 七、常用工具类
 
