@@ -6,6 +6,10 @@
 
 ↑ 这个人的博客好屌
 
+https://fangjian0423.github.io/categories/jdk/
+
+↑ 每个类的实现原理，和源码分析
+
 [极客学院 集合类的教程](https://wiki.jikexueyuan.com/project/java-collection/hashmap.html)
 
 ---
